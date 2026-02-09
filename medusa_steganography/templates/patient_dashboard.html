@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Medusa Protocol</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-user-shield"></i>
+                <h1>PATIENT DASHBOARD</h1>
+            </div>
+            <p class="subtitle">Secure Medical Records Portal</p>
+        </header>
+
+        <nav class="dashboard-nav">
+            <a href="{{ url_for('patient_dashboard') }}" class="nav-link active">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <a href="{{ url_for('index') }}" class="nav-link">
+                <i class="fas fa-lock"></i> Steganography
+            </a>
+            <a href="{{ url_for('doctor_dashboard') }}" class="nav-link">
+                <i class="fas fa-user-md"></i> Doctor Portal
+            </a>
+        </nav>
+
+        <div class="main-content">
+            <!-- Patient Info Card -->
+            <div class="dashboard-grid">
+                <div class="info-card">
+                    <div class="info-header">
+                        <i class="fas fa-id-card"></i>
+                        <h3>Patient Information</h3>
+                    </div>
+                    <div class="info-body">
+                        <div class="info-row">
+                            <span class="info-label">Patient ID:</span>
+                            <span class="info-value">P-999</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Name:</span>
+                            <span class="info-value">John Doe</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Age:</span>
+                            <span class="info-value">45 years</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Blood Type:</span>
+                            <span class="info-value">O+</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Hospital:</span>
+                            <span class="info-value">National General</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-images"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">24</span>
+                            <span class="stat-label">Medical Images</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-file-medical"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Reports</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">18</span>
+                            <span class="stat-label">Encrypted Files</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Records -->
+            <div class="card">
+                <h2><i class="fas fa-folder-open"></i> Recent Medical Records</h2>
+                <div class="table-container">
+                    <table class="medical-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Doctor</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-02-08</td>
+                                <td><span class="badge badge-mri">MRI</span></td>
+                                <td>Brain Scan - Follow-up</td>
+                                <td>Dr. Smith</td>
+                                <td><span class="status status-encrypted">Encrypted</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2026-02-05</td>
+                                <td><span class="badge badge-xray">X-Ray</span></td>
+                                <td>Chest X-Ray</td>
+                                <td>Dr. Johnson</td>
+                                <td><span class="status status-encrypted">Encrypted</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2026-02-01</td>
+                                <td><span class="badge badge-ct">CT Scan</span></td>
+                                <td>Abdominal CT</td>
+                                <td>Dr. Williams</td>
+                                <td><span class="status status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2026-01-28</td>
+                                <td><span class="badge badge-blood">Blood Test</span></td>
+                                <td>Complete Blood Count</td>
+                                <td>Dr. Davis</td>
+                                <td><span class="status status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Current Diagnosis -->
+            <div class="card">
+                <h2><i class="fas fa-stethoscope"></i> Current Diagnosis & Treatment</h2>
+                <div class="diagnosis-grid">
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <i class="fas fa-heartbeat"></i>
+                            <h4>Primary Diagnosis</h4>
+                        </div>
+                        <p class="diagnosis-text">Glioblastoma Grade 4</p>
+                        <span class="diagnosis-date">Diagnosed: January 15, 2026</span>
+                    </div>
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <i class="fas fa-pills"></i>
+                            <h4>Treatment Protocol</h4>
+                        </div>
+                        <p class="diagnosis-text">ST-EN-V3 Protocol</p>
+                        <span class="diagnosis-date">Started: January 20, 2026</span>
+                    </div>
+                    <div class="diagnosis-card">
+                        <div class="diagnosis-header">
+                            <i class="fas fa-calendar-check"></i>
+                            <h4>Next Appointment</h4>
+                        </div>
+                        <p class="diagnosis-text">Follow-up Consultation</p>
+                        <span class="diagnosis-date">February 15, 2026 - 10:00 AM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-btn">
+                        <i class="fas fa-upload"></i>
+                        <span>Upload Medical Image</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span>Schedule Appointment</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comments"></i>
+                        <span>Message Doctor</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-file-prescription"></i>
+                        <span>Request Prescription</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2026 Medusa Protocol - Secure Medical Data Management</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>

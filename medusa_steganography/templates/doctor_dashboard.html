@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Medusa Protocol</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-user-md"></i>
+                <h1>DOCTOR DASHBOARD</h1>
+            </div>
+            <p class="subtitle">Medical Staff Control Panel</p>
+        </header>
+
+        <nav class="dashboard-nav">
+            <a href="{{ url_for('doctor_dashboard') }}" class="nav-link active">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <a href="{{ url_for('index') }}" class="nav-link">
+                <i class="fas fa-lock"></i> Steganography
+            </a>
+            <a href="{{ url_for('patient_dashboard') }}" class="nav-link">
+                <i class="fas fa-user-shield"></i> Patient Portal
+            </a>
+        </nav>
+
+        <div class="main-content">
+            <!-- Doctor Info Card -->
+            <div class="dashboard-grid">
+                <div class="info-card">
+                    <div class="info-header doctor-header">
+                        <i class="fas fa-id-badge"></i>
+                        <h3>Doctor Profile</h3>
+                    </div>
+                    <div class="info-body">
+                        <div class="info-row">
+                            <span class="info-label">Doctor ID:</span>
+                            <span class="info-value">DR-1024</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Name:</span>
+                            <span class="info-value">Dr. Sarah Smith</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Specialty:</span>
+                            <span class="info-value">Neurology</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Department:</span>
+                            <span class="info-value">Oncology</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Hospital:</span>
+                            <span class="info-value">National General</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card doctor-stat">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">127</span>
+                            <span class="stat-label">Total Patients</span>
+                        </div>
+                    </div>
+                    <div class="stat-card doctor-stat">
+                        <i class="fas fa-calendar-day"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">8</span>
+                            <span class="stat-label">Today's Appointments</span>
+                        </div>
+                    </div>
+                    <div class="stat-card doctor-stat">
+                        <i class="fas fa-file-medical-alt"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">45</span>
+                            <span class="stat-label">Pending Reviews</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Appointments -->
+            <div class="card">
+                <h2><i class="fas fa-calendar-check"></i> Today's Appointments</h2>
+                <div class="appointments-container">
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <i class="fas fa-clock"></i>
+                            <span>09:00 AM</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>John Doe - P-999</h4>
+                            <p>Follow-up: Glioblastoma Treatment</p>
+                            <span class="appointment-type">Consultation</span>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="btn-small btn-primary">
+                                <i class="fas fa-video"></i> Join
+                            </button>
+                            <button class="btn-small">
+                                <i class="fas fa-file-alt"></i> Notes
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <i class="fas fa-clock"></i>
+                            <span>10:30 AM</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Jane Smith - P-1024</h4>
+                            <p>Initial Consultation: Migraine</p>
+                            <span class="appointment-type">New Patient</span>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="btn-small btn-primary">
+                                <i class="fas fa-video"></i> Join
+                            </button>
+                            <button class="btn-small">
+                                <i class="fas fa-file-alt"></i> Notes
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="appointment-card">
+                        <div class="appointment-time">
+                            <i class="fas fa-clock"></i>
+                            <span>02:00 PM</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Robert Johnson - P-2048</h4>
+                            <p>Post-Surgery Check-up</p>
+                            <span class="appointment-type">Follow-up</span>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="btn-small btn-primary">
+                                <i class="fas fa-video"></i> Join
+                            </button>
+                            <button class="btn-small">
+                                <i class="fas fa-file-alt"></i> Notes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Patients -->
+            <div class="card">
+                <h2><i class="fas fa-user-injured"></i> Recent Patients</h2>
+                <div class="table-container">
+                    <table class="medical-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Diagnosis</th>
+                                <th>Last Visit</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P-999</td>
+                                <td>John Doe</td>
+                                <td>Glioblastoma Grade 4</td>
+                                <td>2026-02-08</td>
+                                <td><span class="status status-critical">Critical</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View Records">
+                                        <i class="fas fa-folder-open"></i>
+                                    </button>
+                                    <button class="btn-icon" title="View Images">
+                                        <i class="fas fa-images"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Prescribe">
+                                        <i class="fas fa-prescription"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>P-1024</td>
+                                <td>Jane Smith</td>
+                                <td>Chronic Migraine</td>
+                                <td>2026-02-07</td>
+                                <td><span class="status status-stable">Stable</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View Records">
+                                        <i class="fas fa-folder-open"></i>
+                                    </button>
+                                    <button class="btn-icon" title="View Images">
+                                        <i class="fas fa-images"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Prescribe">
+                                        <i class="fas fa-prescription"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>P-2048</td>
+                                <td>Robert Johnson</td>
+                                <td>Post-Craniotomy Recovery</td>
+                                <td>2026-02-05</td>
+                                <td><span class="status status-recovering">Recovering</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View Records">
+                                        <i class="fas fa-folder-open"></i>
+                                    </button>
+                                    <button class="btn-icon" title="View Images">
+                                        <i class="fas fa-images"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Prescribe">
+                                        <i class="fas fa-prescription"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>P-4096</td>
+                                <td>Emily Davis</td>
+                                <td>Epilepsy Management</td>
+                                <td>2026-02-03</td>
+                                <td><span class="status status-stable">Stable</span></td>
+                                <td>
+                                    <button class="btn-icon" title="View Records">
+                                        <i class="fas fa-folder-open"></i>
+                                    </button>
+                                    <button class="btn-icon" title="View Images">
+                                        <i class="fas fa-images"></i>
+                                    </button>
+                                    <button class="btn-icon" title="Prescribe">
+                                        <i class="fas fa-prescription"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Medical Image Management -->
+            <div class="card">
+                <h2><i class="fas fa-images"></i> Medical Image Management</h2>
+                <div class="image-management-grid">
+                    <div class="image-stat-card">
+                        <i class="fas fa-lock"></i>
+                        <div>
+                            <span class="image-stat-value">234</span>
+                            <span class="image-stat-label">Encrypted Images</span>
+                        </div>
+                    </div>
+                    <div class="image-stat-card">
+                        <i class="fas fa-hourglass-half"></i>
+                        <div>
+                            <span class="image-stat-value">12</span>
+                            <span class="image-stat-label">Pending Encryption</span>
+                        </div>
+                    </div>
+                    <div class="image-stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <span class="image-stat-value">456</span>
+                            <span class="image-stat-label">Total Processed</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-grid" style="margin-top: 20px;">
+                    <button class="action-btn">
+                        <i class="fas fa-upload"></i>
+                        <span>Upload & Encrypt Image</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-unlock-alt"></i>
+                        <span>Decrypt Patient Image</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-chart-line"></i>
+                        <span>View Analytics</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add New Patient</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-file-medical"></i>
+                        <span>Create Report</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span>Write Prescription</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule Appointment</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>View Statistics</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-envelope"></i>
+                        <span>Send Message</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2026 Medusa Protocol - Secure Medical Data Management</p>
+        </footer>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>

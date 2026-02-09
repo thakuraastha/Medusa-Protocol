@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medusa Protocol - Medical Image Steganography</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-shield-virus"></i>
+                <h1>MEDUSA PROTOCOL</h1>
+            </div>
+            <p class="subtitle">Secure Medical Image Steganography System</p>
+        </header>
+
+        <nav class="dashboard-nav">
+            <a href="{{ url_for('index') }}" class="nav-link active">
+                <i class="fas fa-lock"></i> Steganography
+            </a>
+            <a href="{{ url_for('patient_dashboard') }}" class="nav-link">
+                <i class="fas fa-user-shield"></i> Patient Portal
+            </a>
+            <a href="{{ url_for('doctor_dashboard') }}" class="nav-link">
+                <i class="fas fa-user-md"></i> Doctor Portal
+            </a>
+        </nav>
+
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('embed', event)">
+                    <i class="fas fa-lock"></i> Embed Data
+                </button>
+                <button class="tab-btn" onclick="switchTab('extract', event)">
+                    <i class="fas fa-unlock"></i> Extract Data
+                </button>
+                <button class="tab-btn" onclick="switchTab('compare', event)">
+                    <i class="fas fa-chart-bar"></i> Compare Methods
+                </button>
+            </div>
+
+            <div id="embed-tab" class="tab-content active">
+                <div class="card">
+                    <h2><i class="fas fa-upload"></i> Embed Secret Data</h2>
+                    <form id="embed-form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Medical Image</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="embed-image" accept="image/*" required>
+                                <span class="file-label">
+                                    <i class="fas fa-cloud-upload-alt"></i> Choose Image
+                                </span>
+                            </div>
+                            <div id="embed-preview" class="image-preview"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Steganography Method</label>
+                            <div class="method-selector">
+                                <label class="method-option">
+                                    <input type="radio" name="embed-method" value="lsb" checked>
+                                    <span class="method-card">
+                                        <i class="fas fa-layer-group"></i>
+                                        <strong>LSB</strong>
+                                        <small>Least Significant Bit</small>
+                                    </span>
+                                </label>
+                                <label class="method-option">
+                                    <input type="radio" name="embed-method" value="dct">
+                                    <span class="method-card">
+                                        <i class="fas fa-wave-square"></i>
+                                        <strong>DCT</strong>
+                                        <small>Discrete Cosine Transform</small>
+                                    </span>
+                                </label>
+                                <label class="method-option">
+                                    <input type="radio" name="embed-method" value="dwt">
+                                    <span class="method-card">
+                                        <i class="fas fa-chart-line"></i>
+                                        <strong>DWT</strong>
+                                        <small>Discrete Wavelet Transform</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Secret Medical Data (JSON Format)</label>
+                            <textarea id="embed-data" placeholder='{"patient_id":"P-999","hospital":"National Gen","diagnosis":"...","protocol":"..."}'required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-lock"></i> Embed Data
+                        </button>
+                    </form>
+
+                    <div id="embed-results" class="results" style="display:none;">
+                        <h3>Results</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <i class="fas fa-signal"></i>
+                                <span class="metric-label">PSNR</span>
+                                <span class="metric-value" id="embed-psnr">--</span>
+                                <span class="metric-unit">dB</span>
+                            </div>
+                            <div class="metric-card">
+                                <i class="fas fa-image"></i>
+                                <span class="metric-label">SSIM</span>
+                                <span class="metric-value" id="embed-ssim">--</span>
+                            </div>
+                            <div class="metric-card">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="metric-label">Bit Accuracy</span>
+                                <span class="metric-value" id="embed-accuracy">--</span>
+                                <span class="metric-unit">%</span>
+                            </div>
+                        </div>
+                        <div class="stego-image-container">
+                            <h4>Steganographic Image</h4>
+                            <img id="stego-image" src="" alt="Stego Image">
+                            <button onclick="downloadImage()" class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="extract-tab" class="tab-content">
+                <div class="card">
+                    <h2><i class="fas fa-unlock"></i> Extract Hidden Data</h2>
+                    <form id="extract-form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Steganographic Image</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="extract-image" accept="image/*" required>
+                                <span class="file-label">
+                                    <i class="fas fa-cloud-upload-alt"></i> Choose Image
+                                </span>
+                            </div>
+                            <div id="extract-preview" class="image-preview"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Steganography Method</label>
+                            <div class="method-selector">
+                                <label class="method-option">
+                                    <input type="radio" name="extract-method" value="lsb" checked>
+                                    <span class="method-card">
+                                        <i class="fas fa-layer-group"></i>
+                                        <strong>LSB</strong>
+                                    </span>
+                                </label>
+                                <label class="method-option">
+                                    <input type="radio" name="extract-method" value="dct">
+                                    <span class="method-card">
+                                        <i class="fas fa-wave-square"></i>
+                                        <strong>DCT</strong>
+                                    </span>
+                                </label>
+                                <label class="method-option">
+                                    <input type="radio" name="extract-method" value="dwt">
+                                    <span class="method-card">
+                                        <i class="fas fa-chart-line"></i>
+                                        <strong>DWT</strong>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Data Length (bits)</label>
+                            <input type="number" id="extract-length" placeholder="Enter data length from embedding" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-unlock"></i> Extract Data
+                        </button>
+                    </form>
+
+                    <div id="extract-results" class="results" style="display:none;">
+                        <h3>Extracted Data</h3>
+                        <div class="extracted-data">
+                            <pre id="extracted-text"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="compare-tab" class="tab-content">
+                <div class="card">
+                    <h2><i class="fas fa-chart-bar"></i> Compare Methods</h2>
+                    <form id="compare-form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Medical Image</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="compare-image" accept="image/*" required>
+                                <span class="file-label">
+                                    <i class="fas fa-cloud-upload-alt"></i> Choose Image
+                                </span>
+                            </div>
+                            <div id="compare-preview" class="image-preview"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Secret Medical Data</label>
+                            <textarea id="compare-data" placeholder='{"patient_id":"P-999","hospital":"National Gen","diagnosis":"...","protocol":"..."}'required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-chart-bar"></i> Compare Methods
+                        </button>
+                    </form>
+
+                    <div id="compare-results" class="results" style="display:none;">
+                        <h3>Comparative Analysis</h3>
+                        <div class="charts-grid">
+                            <div class="chart-container">
+                                <canvas id="psnr-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="ssim-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="accuracy-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading" style="display:none;">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

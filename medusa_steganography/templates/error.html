@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error {{ code }} - Medusa Protocol</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <div class="logo">
+                <i class="fas fa-shield-virus"></i>
+                <h1>MEDUSA PROTOCOL</h1>
+            </div>
+
+            <div class="error-code">{{ code }}</div>
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-right: 10px;"></i>
+                {{ message }}
+            </div>
+            <a href="{{ url_for('main.index') }}" class="error-link">
+                <i class="fas fa-home"></i> Return to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>
